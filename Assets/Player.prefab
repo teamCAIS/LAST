@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 784178134671238803}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 3520390964000234126}
   - component: {fileID: 6230070672443874257}
   - component: {fileID: 5450009947785383484}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 3717362657349464863}
   - component: {fileID: 1076941007709557336}
   - component: {fileID: 453052079873167018}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 6882177752260864616}
   - component: {fileID: 1314145068716260322}
   - component: {fileID: 8693863336123867762}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 2047657716107742205}
   - component: {fileID: 1157222309142779957}
   - component: {fileID: 6868309681106592823}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6527724850144833642}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 6795621977868718795}
   - component: {fileID: 6811867803307354114}
   - component: {fileID: 601456580235453400}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,9 +519,10 @@ GameObject:
   - component: {fileID: 8375368026555752925}
   - component: {fileID: 544161496170058386}
   - component: {fileID: 988773764879688380}
-  m_Layer: 0
+  - component: {fileID: -1584049198133656100}
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -584,6 +585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 6230070672443874257}
+  cameraRotationLimit: 85
 --- !u!114 &1824551438104560457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,6 +650,8 @@ MonoBehaviour:
   - {fileID: 6708043909808830197}
   - {fileID: 6230070672443874257}
   - {fileID: 5450009947785383484}
+  - {fileID: -1584049198133656100}
+  remoteLayerName: RemotePlayer
 --- !u!114 &544161496170058386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -690,3 +694,23 @@ MonoBehaviour:
   m_MovementThreshold: 0.001
   m_InterpolateRotation: 0.3
   m_InterpolateMovement: 0
+--- !u!114 &-1584049198133656100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8085254924531544679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6395008c34ff937469adfc7ee2b68679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon:
+    name: Glock
+    damage: 10
+    range: 100
+  cam: {fileID: 6230070672443874257}
+  mask:
+    serializedVersion: 2
+    m_Bits: 4294967295
