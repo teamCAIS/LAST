@@ -7,6 +7,8 @@ public class PlayerShoot : NetworkBehaviour {
 
 	public PlayerWeapon weapon;
 
+	public GameObject impact;
+
 	[SerializeField]
 	private Camera cam;
 
@@ -33,23 +35,67 @@ public class PlayerShoot : NetworkBehaviour {
 	[Client]
 	void Shoot ()
 	{
+		if(!isLocalPlayer) return;
+
+		CmdOnShoot ();
 		RaycastHit _hit;
 		if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, weapon.range, mask) )
 		{
-            //CmdPlayerShot(_hit.collider.name);
-			if (_hit.collider.tag == PLAYER_TAG)
+      CmdPlayerShot(_hit.collider.name);
+			/* if (_hit.collider.tag == PLAYER_TAG)
 			{
 				CmdPlayerShot(_hit.collider.name);
-			}
-		}
+			} */
 
+			CmdOnHit(_hit.point, _hit.normal);
+		}
 	}
 
 	[Command]
+	void CmdOnShoot ()
+	{
+		RpcDoShootEffect();
+    }
+
+	//Is called on all clients when we need to to
+	// a shoot effect
+	[ClientRpc]
+	void RpcDoShootEffect ()
+	{
+		weapon.flash.Play();
+	}
+
+	//Is called on the server when we hit something
+	//Takes in the hit point and the normal of the surface
+	[Command]
+	void CmdOnHit (Vector3 _pos, Vector3 _normal)
+	{
+		RpcDoHitEffect(_pos, _normal);
+    }
+
+	//Is called on all clients
+	//Here we can spawn in cool effects
+	[ClientRpc]
+	void RpcDoHitEffect(Vector3 _pos, Vector3 _normal)
+	{
+		GameObject impactGO = Instantiate(impact, _pos, Quaternion.LookRotation(_normal));
+		Destroy(impactGO, 2.0f);
+	}
+
+	/*[Command]
+	 void CmdPlayerShot (string _playerID, int _damage, string _sourceID)
+	{
+		Debug.Log(_playerID + " has been shot.");
+
+        Player _player = GameManager.GetPlayer(_playerID);
+        _player.RpcTakeDamage(_damage, _sourceID);
+	} */
+
+ 	[Command]
 	void CmdPlayerShot (string _ID)
 	{
 		Debug.Log(_ID + " has been shot.");
-        //GameObject.Find(_ID).SetActive(false);
-	}
+    //GameObject.Find(_ID).SetActive(false);
+	} 
 
 }

@@ -641,10 +641,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: 636673c8-fd7f-48fe-b6b3-b981ce016eb5
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: LAST
+  organizationId: chaios
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
