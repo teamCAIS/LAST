@@ -8,10 +8,17 @@ public class PlayerSetup : NetworkBehaviour
   [SerializeField]
 	string remoteLayerName = "RemotePlayer";
 
+  [SerializeField]
+  GameObject gun;
+
+  [SerializeField]
+  Behaviour shootScript;
+
   Camera sceneCamera;
 
   void Start()
   {
+    Debug.Log("Player setup started");
     if (!isLocalPlayer)
     {
       DisableComponents();
@@ -26,14 +33,40 @@ public class PlayerSetup : NetworkBehaviour
       
     }
     
-    RegisterPlayer ();
+    //RegisterPlayer ();
+
   }
 
-  void RegisterPlayer ()
+  public override void OnStartClient()
+    {
+      Debug.Log("Client started");
+        base.OnStartClient();
+
+        string _netID = GetComponent<NetworkIdentity>().netId.ToString();
+        transform.name = _netID;
+        Player _player = GetComponent<Player>();
+        _player.setName(_netID);
+
+        GameManager.instance.RegisterPlayer(_netID, _player);
+
+        if(!_player.isAssassin)
+        {
+          //desabilitar arma
+          gun.SetActive(false);
+          shootScript.enabled = false;
+        }
+    }
+
+  public override void OnDeserialize(NetworkReader reader, bool initialState)
+  {
+    Debug.Log("OnNetworkDestroy");
+  }
+
+  /* void RegisterPlayer ()
 	{
 		string _ID = "Player " + GetComponent<NetworkIdentity>().netId;
 		transform.name = _ID;
-	}
+	} */
 
 	void AssignRemoteLayer ()
 	{
@@ -50,6 +83,9 @@ public class PlayerSetup : NetworkBehaviour
 
   void OnDisable()
   {
+    //GameManager.instance.shouldRestart();
+    Player _player = GetComponent<Player>();
+    GameManager.instance.UnRegisterPlayer(_player.playerName);
     if(sceneCamera != null)
     {
       sceneCamera.gameObject.SetActive(true);

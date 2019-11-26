@@ -41,11 +41,15 @@ public class PlayerShoot : NetworkBehaviour {
 		RaycastHit _hit;
 		if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, weapon.range, mask) )
 		{
-      CmdPlayerShot(_hit.collider.name);
-			/* if (_hit.collider.tag == PLAYER_TAG)
+
+			//Quando jogador for morto, gameManager precisa ser notificado
+			// recebendo o jogador e retirando-o da lista de ativos
+			// quando sobrar 2 jogadores, o jogo acaba
+      //CmdPlayerShot(_hit.collider.name);
+			if (_hit.collider.tag == PLAYER_TAG)
 			{
 				CmdPlayerShot(_hit.collider.name);
-			} */
+			}
 
 			CmdOnHit(_hit.point, _hit.normal);
 		}
@@ -95,6 +99,8 @@ public class PlayerShoot : NetworkBehaviour {
 	void CmdPlayerShot (string _ID)
 	{
 		Debug.Log(_ID + " has been shot.");
+		Player _player = GameManager.GetPlayer(_ID);
+		_player.RpcDie();
     //GameObject.Find(_ID).SetActive(false);
 	} 
 

@@ -5374,6 +5374,7 @@ GameObject:
   - component: {fileID: 544161496170058386}
   - component: {fileID: 988773764879688380}
   - component: {fileID: 7995390854023882536}
+  - component: {fileID: 4320452035201523228}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -5506,6 +5507,8 @@ MonoBehaviour:
   - {fileID: 5450009947785383484}
   - {fileID: 0}
   remoteLayerName: RemotePlayer
+  gun: {fileID: 7735904268216249179}
+  shootScript: {fileID: 7995390854023882536}
 --- !u!114 &544161496170058386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5570,6 +5573,25 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4320452035201523228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8085254924531544679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7a1d5f576f806d4b8d3304ffd21b23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  isAssassin: 0
+  playerName: 'Player '
+  playerGO: {fileID: 8085254924531544679}
+  disableOnDeath:
+  - {fileID: 1824551438104560457}
+  - {fileID: 6708043909808830197}
 --- !u!1 &8336101485864312287
 GameObject:
   m_ObjectHideFlags: 0
