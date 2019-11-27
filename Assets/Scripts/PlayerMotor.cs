@@ -12,7 +12,7 @@ public class PlayerMotor : MonoBehaviour
   private float currentCameraRotationX = 0f;
 
   [SerializeField]
-	private float cameraRotationLimit = 85f;
+  private float cameraRotationLimit = 85f;
 
   private Rigidbody rb;
 
@@ -51,12 +51,13 @@ public class PlayerMotor : MonoBehaviour
   void PerformRotation()
   {
     rb.MoveRotation(rb.rotation * Quaternion.Euler(rotation));
-
     if (cam != null)
     {
+      // Set our rotation and clamp it
       currentCameraRotationX -= cameraRotationX;
-			currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);
-    
+      currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);
+
+      //Apply our rotation to the transform of our camera
       cam.transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
     }
   }

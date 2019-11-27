@@ -1,82 +1,86 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+  public static GameManager instance;
 
-    private bool gameOver = false;
-    private bool gameStarted = false;
-    
-    void Awake ()
-	{
-        Debug.Log("Game manager awake");
-		if (instance != null)
-		{
-			Debug.LogError("More than one GameManager in scene.");
-		} else
-		{
-			instance = this;
-		}
-	}
+  private bool gameOver = false;
+  private bool gameStarted = false;
 
-    private const string PLAYER_ID_PREFIX = "Player ";
-
-    private Dictionary<string, Player> players = new Dictionary<string, Player>();
-
-    public void RegisterPlayer (string _netID, Player _player)
+  void Awake()
+  {
+    Debug.Log("Game manager awake");
+    if (instance != null)
     {
-        string _playerID = PLAYER_ID_PREFIX + _netID;
-        instance.players.Add(_playerID, _player);
+      Debug.LogError("More than one GameManager in scene.");
+    }
+    else
+    {
+      instance = this;
+    }
+  }
 
-        //add second player as assassin
-        if(instance.players.Count == 2) 
-        {
-            _player.becomeAssassin();
-        }
+  private const string PLAYER_ID_PREFIX = "Player ";
 
-        _player.transform.name = _playerID;
+  private Dictionary<string, Player> players = new Dictionary<string, Player>();
 
-        if(instance.players.Count > 2)
-        {
-            gameStarted = true;
-        }
+  public void RegisterPlayer(string _netID, Player _player)
+  {
+    string _playerID = PLAYER_ID_PREFIX + _netID;
+    instance.players.Add(_playerID, _player);
+
+    //add second player as assassin
+    if (instance.players.Count == 2)
+    {
+      _player.becomeAssassin();
     }
 
-    public void UnRegisterPlayer (string _playerID)
+    _player.transform.name = _playerID;
+
+    if (instance.players.Count == 2)
     {
-        instance.players.Remove(_playerID);
-        if(instance.players.Count <= 2)
-        {
-            gameOver = true;
-        }
+      gameStarted = true;
+    }
+  }
+
+  public void UnRegisterPlayer(string _playerID)
+  {
+    instance.players.Remove(_playerID);
+    if (instance.players.Count == 1)
+    {
+      gameOver = true;
+    }
+  }
+
+  public static Player GetPlayer(string _playerID)
+  {
+    return instance.players[_playerID];
+  }
+
+  /* public void shouldRestart()
+  {
+      if(instance.players.Count)
+  } */
+
+  void Update()
+  {
+    if (gameStarted && gameOver)
+    {
+      instance.players = new Dictionary<string, Player>();
+      StartCoroutine(goToGameOver(0.05f));
+      gameOver = false;
+      gameStarted = false;
     }
 
-    public static Player GetPlayer (string _playerID)
-    {
-        return instance.players[_playerID];
-    }
 
-    /* public void shouldRestart()
-    {
-        if(instance.players.Count)
-    } */
+  }
+  IEnumerator goToGameOver(float time)
+  {
+    yield return new WaitForSeconds(time);
 
-    void Update()
-    {
-        if(gameStarted && gameOver)
-        {
-            instance.players = new Dictionary<string, Player>();
-            foreach (var player in players)
-            {
-                Destroy(player.Value);
-            }
-            gameOver = false;
-            gameStarted = false;
-        }
-
-        
-    }
-
+    // Code to execute after the delay
+    SceneManager.LoadScene("EndScene");
+  }
 }
