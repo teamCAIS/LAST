@@ -32,14 +32,14 @@ public class GameManager : MonoBehaviour
     instance.players.Add(_playerID, _player);
 
     //add second player as assassin
-    if (instance.players.Count == 2)
+    if (instance.players.Count == 3)
     {
       _player.becomeAssassin();
     }
 
     _player.transform.name = _playerID;
 
-    if (instance.players.Count == 2)
+    if (instance.players.Count == 3)
     {
       gameStarted = true;
     }
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
   public void UnRegisterPlayer(string _playerID)
   {
     instance.players.Remove(_playerID);
-    if (instance.players.Count == 1)
+    if (instance.players.Count == 2)
     {
       gameOver = true;
     }
